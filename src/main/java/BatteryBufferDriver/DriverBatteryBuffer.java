@@ -26,6 +26,7 @@ public class DriverBatteryBuffer implements DriverBlock {
     public ManagedEnvironment createEnvironment(World world, BlockPos blockPos, EnumFacing enumFacing) {
 
         MetaTileEntityBatteryBuffer buffer = getBuffer(world, blockPos);
+        // getBuffer doesn't return nil, otherwise worksWith would have returned false
         IEnergyContainer energyContainer = buffer.getCapability(GregtechCapabilities.CAPABILITY_ENERGY_CONTAINER, enumFacing);
 
         return new EnvironmentBatteryBuffer(buffer, energyContainer, enumFacing);
@@ -35,8 +36,12 @@ public class DriverBatteryBuffer implements DriverBlock {
     private MetaTileEntityBatteryBuffer getBuffer(World world, BlockPos blockPos) {
         TileEntity tile = world.getTileEntity(blockPos);
         if (tile != null) {
-            MetaTileEntityHolder holder = (MetaTileEntityHolder) tile;
-            return (MetaTileEntityBatteryBuffer) holder.getMetaTileEntity();
+            if (tile instanceof MetaTileEntityHolder) {
+                MetaTileEntityHolder holder = (MetaTileEntityHolder) tile;
+                if (holder.getMetaTileEntity() instanceof MetaTileEntityBatteryBuffer) {
+                    return (MetaTileEntityBatteryBuffer) holder.getMetaTileEntity();
+                }
+            }
         }
         return null;
     }
