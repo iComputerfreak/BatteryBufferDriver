@@ -2,7 +2,7 @@
 
 This mod allows the Adapter block from OpenComputers to read information about the Battery Buffers from GregTech: Community Edition.
 
-**This mod was only tested and programmed for MC 1.12.2. It will not be actively maintained or updated.**
+**This mod was only programmed and tested for MC 1.12.2.**
 
 To compile this mod, download the repo and execute `./gradlew build`. The jar file will then be compiled into `build/libs/`.
 
